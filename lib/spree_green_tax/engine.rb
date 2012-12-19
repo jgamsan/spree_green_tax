@@ -1,7 +1,6 @@
 module SpreeGreenTax
   class Engine < Rails::Engine
     require 'spree/core'
-    isolate_namespace Spree
     engine_name 'spree_green_tax'
 
     config.autoload_paths += %W(#{config.root}/lib)
@@ -11,6 +10,9 @@ module SpreeGreenTax
       g.test_framework :rspec
     end
 
+    initializer 'spree.register.green_tax', :after => "spree.register.calculators" do |app|
+       app.config.spree.calculators.tax_rates << Spree::Calculator::GreenTax
+    end
     def self.activate
       Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')) do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)
