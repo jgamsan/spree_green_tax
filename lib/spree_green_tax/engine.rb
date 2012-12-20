@@ -11,7 +11,7 @@ module SpreeGreenTax
     end
 
     initializer 'spree.register.green_tax', :after => "spree.register.calculators" do |app|
-       app.config.spree.calculators.tax_rates << Spree::Calculator::GreenTax
+       app.config.spree.calculators.tax_rates << Spree::Calculator::TireGreenTax
     end
     def self.activate
       Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')) do |c|
