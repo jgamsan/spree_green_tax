@@ -6,7 +6,7 @@ module Spree
         params[:q] ||= {}
         params[:q] ||= "cat asc"
         @search = Spree::TireGreenRate.ransack(params[:q])
-        @tire_green_rates = @search.result.page(params[:page]).per(10)
+        @tire_green_rates = @search.result.page(params[:page]).per(5)
       end
     end
   end
