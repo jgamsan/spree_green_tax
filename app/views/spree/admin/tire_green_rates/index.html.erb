@@ -1,0 +1,47 @@
+<%= render :partial => 'spree/admin/shared/tires_setting_menu' %>
+<% content_for :page_title do %>
+  <%= t(:tire_green_rates) %>
+<% end %>
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to t(:new_tire_green_rate), new_admin_tire_green_rate_url, :icon => 'icon-plus', :id => 'admin_new_tire_green_rate_link' %>
+  </li>
+<% end %>
+
+<table class="index responsive" id="tire_green_rates_listing">
+  <colgroup>
+    <col style="width: 10%;">
+    <col style="width: 30%;">
+    <col style="width: 15%;">
+    <col style="width: 15%;">
+    <col style="width: 20%;">
+    <col style="width: 10%;">
+  </colgroup>
+  <thead data-hook="admin_tire_green_rates_index_headers">
+    <th><%= sort_link @search, :cat, t(:cat) %></th>
+    <th><%= t(:description) %></th>
+    <th><%= t(:weight_min) %></th>
+    <th><%= t(:weight_max) %></th>
+    <th><%= t(:amount) %></th>
+    <th><%= t(:currency) %></th>
+    <th data-hook="admin_tire_green_rates_index_header_actions" class="actions">
+    </th>
+  </thead>
+  <tbody>
+    <% @tire_green_rates.each do |green_rate|%>
+      <tr id="<%= spree_dom_id green_rate %>" data-hook="admin_tire_green_rates_index_rows">
+        <td class="align-center"><%= green_rate.cat %></td>
+        <td class="align-center"><%= green_rate.description %></td>
+        <td class="align-center"><%= green_rate.weight_min %></td>
+        <td class="align-center"><%= green_rate.weight_max %></td>
+        <td class="align-center"><%= green_rate.amount %></td>
+        <td class="align-center"><%= green_rate.currency %></td>
+        <td class="align-center" data-hook="admin_tire_green_rates_index_row_actions">
+          <%= link_to_edit green_rate %> &nbsp;
+          <%= link_to_delete green_rate %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @tire_green_rates %>
