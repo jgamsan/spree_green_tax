@@ -1,0 +1,12 @@
+es:
+  cat: "Categoria"
+  description: "Descripcion"
+  weight_min: "Peso Minimo"
+  weight_max: "Peso Maximo"
+  amount: "Cantidad"
+  currency: "Moneda"
+  tire_green_taxes: "Gestion Ecotasas"
+  tire_green_tax: "Ecotasa"
+  new_tire_green_tax: "Nueva Ecotasa"
+  back_to_tire_green_taxes_list: "Volver a Listado de Ecotasas"
+  editing_tire_green_tax: "Editando Ecotasa"
