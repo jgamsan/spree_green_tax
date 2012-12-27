@@ -1,11 +1,12 @@
 require_dependency 'spree/calculator'
 
 module Spree
-  class Calculator::TireGreenTax < Calculator::DefaultTax
+  class Calculator::TireGreenRate < Calculator::DefaultTax
     def self.description
-      I18n.t(:green_tax)
+      I18n.t(:green_rate)
     end
 
+<<<<<<< HEAD:app/models/spree/calculator/tire_green_tax.rb
     def compute(object)
       return unless object.present? and object.line_items.present?
       green_tax = 0
@@ -18,6 +19,9 @@ module Spree
 
 
     def find_green_tax(variant)
+=======
+    def find_green_rate(variant)
+>>>>>>> 84af9e8843a4d686d624498730fade892a045e0f:app/models/spree/calculator/tire_green_rate.rb
       # calculate the tax rate based on order billing location
       # the rate will be calculated:
       # 1) by querying the spree_local_taxes DB for a county + state match
@@ -34,12 +38,12 @@ module Spree
 
       # NOTE the zip code match is only based on the first five digits
 
-      Spree::TireGreenTax.find(variant.tire_green_tax_id)
+      Spree::TireGreenRate.find(variant.tire_green_rate_id)
     end
 
     def taxable_amount(order)
       # item total + shipping - promotions
-      
+
       possible_adjustments = order.adjustments.eligible
 
       adjustment_totals = (
@@ -56,20 +60,26 @@ module Spree
 
     private
 
+<<<<<<< HEAD:app/models/spree/calculator/tire_green_tax.rb
       def compute_order(line_items)
         green_tax = 0
         line_items.each do |item|
           green_tax += item.variant.tire_green_tax.amount
+=======
+      def compute_order(order)
+        green_rate = 0
+        order.line_items.each do |item|
+          green_rate += item.variant.tire_green_rate.amount
+>>>>>>> 84af9e8843a4d686d624498730fade892a045e0f:app/models/spree/calculator/tire_green_rate.rb
         end
-        tire_green_tax = green_tax
+        tire_green_rate = green_rate
 
         # TODO the only issue here is that the label text for the adjustment is not calculated
         # based on the rate method here, the TaxRate.amount is used instead
         # need to modify https://github.com/spree/spree/blob/master/core/app/models/spree/tax_rate.rb#L47
 
-        round_to_two_places(taxable_amount(order) + tire_green_tax)
+        round_to_two_places(taxable_amount(order) + tire_green_rate)
       end
 
   end
 end
-
