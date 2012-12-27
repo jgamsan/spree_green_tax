@@ -6,6 +6,17 @@ module Spree
       I18n.t(:green_tax)
     end
 
+    def compute(object)
+      return unless object.present? and object.line_items.present?
+      green_tax = 0
+      object.line_items.each do |item|
+         green_tax += item.variant.tire_green_tax.amount
+      end
+      tire_green_tax = green_tax
+      round_to_two_places(tire_green_tax)
+    end
+
+
     def find_green_tax(variant)
       # calculate the tax rate based on order billing location
       # the rate will be calculated:
@@ -45,9 +56,9 @@ module Spree
 
     private
 
-      def compute_order(order)
+      def compute_order(line_items)
         green_tax = 0
-        order.line_items.each do |item|
+        line_items.each do |item|
           green_tax += item.variant.tire_green_tax.amount
         end
         tire_green_tax = green_tax
