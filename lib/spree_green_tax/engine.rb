@@ -9,10 +9,12 @@ module SpreeGreenTax
     config.generators do |g|
       g.test_framework :rspec
     end
-    app.config.spree.calculators.add_class('tire_green_rate')
-    app.config.spree.calculators.tire_green_rate = [ 
-      Spree::Calculator::TireGreenRate
-    ]
+    initializer 'spree.register.calculators' do |app|
+      app.config.spree.calculators.add_class('tire_green_rate')
+      app.config.spree.calculators.tire_green_rate = [ 
+        Spree::Calculator::TireGreenRate
+      ]
+    end
     def self.activate
       Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')) do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)
