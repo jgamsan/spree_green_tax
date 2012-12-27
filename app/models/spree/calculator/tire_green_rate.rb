@@ -6,22 +6,18 @@ module Spree
       I18n.t(:green_rate)
     end
 
-<<<<<<< HEAD:app/models/spree/calculator/tire_green_tax.rb
     def compute(object)
       return unless object.present? and object.line_items.present?
-      green_tax = 0
+      green_rate = 0
       object.line_items.each do |item|
-         green_tax += item.variant.tire_green_tax.amount
+         green_rate += item.variant.tire_green_tax.amount
       end
-      tire_green_tax = green_tax
-      round_to_two_places(tire_green_tax)
+      tire_green_rate = green_rate
+      round_to_two_places(tire_green_rate)
     end
 
 
-    def find_green_tax(variant)
-=======
     def find_green_rate(variant)
->>>>>>> 84af9e8843a4d686d624498730fade892a045e0f:app/models/spree/calculator/tire_green_rate.rb
       # calculate the tax rate based on order billing location
       # the rate will be calculated:
       # 1) by querying the spree_local_taxes DB for a county + state match
@@ -60,17 +56,10 @@ module Spree
 
     private
 
-<<<<<<< HEAD:app/models/spree/calculator/tire_green_tax.rb
-      def compute_order(line_items)
-        green_tax = 0
-        line_items.each do |item|
-          green_tax += item.variant.tire_green_tax.amount
-=======
       def compute_order(order)
         green_rate = 0
         order.line_items.each do |item|
           green_rate += item.variant.tire_green_rate.amount
->>>>>>> 84af9e8843a4d686d624498730fade892a045e0f:app/models/spree/calculator/tire_green_rate.rb
         end
         tire_green_rate = green_rate
 
