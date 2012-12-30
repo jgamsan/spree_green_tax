@@ -6,6 +6,10 @@ module Spree
       I18n.t(:green_rate)
     end
 
+    def compute(order)
+      compute_order(order)
+    end
+
     def find_green_rate(variant)
       # calculate the tax rate based on order billing location
       # the rate will be calculated:
@@ -24,23 +28,6 @@ module Spree
       # NOTE the zip code match is only based on the first five digits
 
       Spree::TireGreenRate.find(variant.tire_green_rate_id)
-    end
-
-    def taxable_amount(order)
-      # item total + shipping - promotions
-
-      possible_adjustments = order.adjustments.eligible
-
-      adjustment_totals = (
-        possible_adjustments.shipping +
-        possible_adjustments.promotion
-      ).map(&:amount).sum
-
-      line_items_total = order.line_items.select do |line_item|
-        line_item.product.tax_category == rate.tax_category
-      end.sum(&:total)
-
-      line_items_total + adjustment_totals
     end
 
     private
