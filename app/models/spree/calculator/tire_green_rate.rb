@@ -41,7 +41,7 @@ module Spree
         # based on the rate method here, the TaxRate.amount is used instead
         # need to modify https://github.com/spree/spree/blob/master/core/app/models/spree/tax_rate.rb#L47
 
-        round_to_two_places(green_rate)
+        return green_rate
       end
 
   end
