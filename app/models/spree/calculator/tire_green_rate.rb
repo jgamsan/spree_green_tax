@@ -1,15 +1,10 @@
 require_dependency 'spree/calculator'
 
 module Spree
-  class Calculator::TireGreenRate < Calculator
+  class Calculator::TireGreenRate < Calculator::DefaultTax
     def self.description
       I18n.t(:green_rate)
     end
-
-    def compute(order)
-      compute_order(order)
-    end
-
 
     def find_green_rate(variant)
       # calculate the tax rate based on order billing location
@@ -56,7 +51,7 @@ module Spree
           green_rate += item.variant.tire_green_rate.amount
         end
         tire_green_rate = green_rate
-
+        tax_rate = tire_green_rate + rate.amount
         # TODO the only issue here is that the label text for the adjustment is not calculated
         # based on the rate method here, the TaxRate.amount is used instead
         # need to modify https://github.com/spree/spree/blob/master/core/app/models/spree/tax_rate.rb#L47
