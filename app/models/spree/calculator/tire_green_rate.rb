@@ -6,6 +6,10 @@ module Spree
       I18n.t(:green_rate)
     end
 
+    def self.register
+      super
+    end
+
     def compute(order)
       compute_order(order)
     end
