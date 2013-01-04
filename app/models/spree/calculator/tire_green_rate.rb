@@ -1,9 +1,17 @@
 require_dependency 'spree/calculator'
 
 module Spree
-  class Calculator::TireGreenRate < Calculator::DefaultTax
+  class Calculator::TireGreenRate < Calculator
     def self.description
       I18n.t(:green_rate)
+    end
+
+    def self.register
+      super
+    end
+
+    def compute(order)
+      compute_order(order)
     end
 
     def find_green_rate(variant)
@@ -26,23 +34,6 @@ module Spree
       Spree::TireGreenRate.find(variant.tire_green_rate_id)
     end
 
-    def taxable_amount(order)
-      # item total + shipping - promotions
-
-      possible_adjustments = order.adjustments.eligible
-
-      adjustment_totals = (
-        possible_adjustments.shipping +
-        possible_adjustments.promotion
-      ).map(&:amount).sum
-
-      line_items_total = order.line_items.select do |line_item|
-        line_item.product.tax_category == rate.tax_category
-      end.sum(&:total)
-
-      line_items_total + adjustment_totals
-    end
-
     private
 
       def compute_order(order)
@@ -50,13 +41,11 @@ module Spree
         order.line_items.each do |item|
           green_rate += item.variant.tire_green_rate.amount
         end
-        tire_green_rate = green_rate
-
         # TODO the only issue here is that the label text for the adjustment is not calculated
         # based on the rate method here, the TaxRate.amount is used instead
         # need to modify https://github.com/spree/spree/blob/master/core/app/models/spree/tax_rate.rb#L47
 
-        round_to_two_places(taxable_amount(order) + tire_green_rate)
+        return green_rate
       end
 
   end

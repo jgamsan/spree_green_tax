@@ -9,9 +9,9 @@ module SpreeGreenTax
     config.generators do |g|
       g.test_framework :rspec
     end
-
-    initializer 'spree.register.green_tax', :after => "spree.register.calculators" do |app|
-       app.config.spree.calculators.tax_rates << Spree::Calculator::TireGreenRate
+    initializer 'spree.register.calculators' do |app|
+      app.config.spree.calculators.tax_rates << Spree::Calculator::TireGreenRate
+      app.config.spree.calculators.shipping_methods << Spree::Calculator::VariableRate
     end
     def self.activate
       Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')) do |c|
