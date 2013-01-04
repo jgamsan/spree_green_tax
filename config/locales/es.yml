@@ -11,3 +11,4 @@ es:
   new_tire_green_rate: "Nueva Ecotasa"
   back_to_tire_green_rates_list: "Volver a Listado de Ecotasas"
   editing_tire_green_rate: "Editando Ecotasa"
+  variable_rate_per_total: "Cantidad Variable segun Total"
