@@ -39,7 +39,7 @@ module Spree
       def compute_order(order)
         green_rate = 0
         order.line_items.each do |item|
-          green_rate += item.variant.tire_green_rate.amount
+          green_rate += item.variant.tire_green_rate.amount * item.quantity
         end
         # TODO the only issue here is that the label text for the adjustment is not calculated
         # based on the rate method here, the TaxRate.amount is used instead
