@@ -45,7 +45,7 @@ module Spree
         # based on the rate method here, the TaxRate.amount is used instead
         # need to modify https://github.com/spree/spree/blob/master/core/app/models/spree/tax_rate.rb#L47
 
-        return green_rate
+        green_rate
       end
 
   end
