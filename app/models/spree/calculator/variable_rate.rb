@@ -14,9 +14,7 @@ module Spree
 
     def compute(object)
       return unless object.present? and object.line_items.present?
-      items = Spree::LineItem.joins(:variant => :product).where('order_id = ? and spree_products.shipping_category_id =
- ?', object.id, 2)
-      item_total = items.map(&:amount).sum
+      item_total = object.line_items.map(&:amount).sum
       if item_total >= preferred_max_amount
         0.0
       else
