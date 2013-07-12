@@ -13,8 +13,8 @@ module Spree
     end
 
     def compute(object)
-      if object.total >= preferred_max_amount
-        0.0
+      if object.total > preferred_max_amount
+        0
       else
         preferred_amount
       end
