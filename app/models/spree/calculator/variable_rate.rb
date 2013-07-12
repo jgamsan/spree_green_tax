@@ -13,15 +13,10 @@ module Spree
     end
 
     def compute(object)
-<<<<<<< HEAD
-      if object.total > preferred_max_amount
-        0
-=======
       return unless object.present? and object.line_items.present?
       item_total = object.line_items.map(&:amount).sum
-      if item_total >= preferred_max_amount
-        0.0
->>>>>>> 50d9f0025af25aae28b4b556ac5e07f91e741a54
+      if item_total > preferred_max_amount
+        0
       else
         preferred_amount
       end
